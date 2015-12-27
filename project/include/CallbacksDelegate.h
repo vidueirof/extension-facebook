@@ -7,10 +7,8 @@
 @interface CallbacksDelegate : NSObject <
 	FBSDKAppInviteDialogDelegate,
 	FBSDKGameRequestDialogDelegate,
-	FBSDKSharingDelegate
+	FBSDKSharingDelegate,
+	UIApplicationDelegate
 >
 
-@end
-
-@interface NMEAppDelegate : NSObject <UIApplicationDelegate>
 @end

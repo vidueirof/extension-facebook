@@ -10,6 +10,7 @@
 #import <FBSDKShareKit/FBSDKShareLinkContent.h>
 
 #import <Facebook.h>
+#import <OpenFlAppDelegate.h>
 
 namespace extension_facebook {
 
@@ -32,6 +33,8 @@ namespace extension_facebook {
 	void init() {
 		root = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 		callbacks = [[CallbacksDelegate alloc] init];
+
+		[[OpenFlAppDelegate sharedInstance] addAppDelegate:callbacks];
 		
 		[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
 									didFinishLaunchingWithOptions:[[NSMutableDictionary alloc] init]];
