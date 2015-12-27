@@ -8,7 +8,8 @@
 	"releasenote": "First release... should be working.",
 	"dependencies": {
 		"inthebox-macros": "",
-		"extension-android-support-v4": ""
+		"extension-android-support-v4": "",
+		"extension-ios-app-delegate": ""
 	},
 	"contributors": ["fbricker"]
 }
