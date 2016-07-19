@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -51,12 +52,14 @@ public class FacebookExtension extends Extension {
 	static GameRequestDialog requestDialog;
 	static HaxeObject callbacks;
 	static ShareDialog shareDialog;
+	static AppEventsLogger logger;
 
 	public FacebookExtension() {
 
 		FacebookSdk.sdkInitialize(mainContext);
 		requestDialog = new GameRequestDialog(mainActivity);
 		shareDialog = new ShareDialog(mainActivity);
+		logger = AppEventsLogger.newLogger(mainActivity);
 
 		if (callbackManager!=null) {
 			return;
@@ -438,6 +441,11 @@ public class FacebookExtension extends Extension {
 
 	}
 
+	// logs your custom event
+	public static void logEvent(String event) {
+		logger.logEvent(event);
+	}
+
 	@Override public boolean onActivityResult (int requestCode, int resultCode, Intent data) {
 		callbackManager.onActivityResult(requestCode, resultCode, data);
 		return true;
@@ -449,4 +457,15 @@ public class FacebookExtension extends Extension {
 		}
 	}
 
+	// Add to each long-lived activity
+	@Override protected void onResume() {
+	  super.onResume();
+	  AppEventsLogger.activateApp(mainActivity);
+	}
+
+	// you should also log app deactivation
+	@Override protected void onPause() {
+	  super.onPause();
+	  AppEventsLogger.deactivateApp(mainActivity);
+	}
 }
