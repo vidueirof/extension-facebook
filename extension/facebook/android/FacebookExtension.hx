@@ -148,4 +148,7 @@ class FacebookExtension {
 		JNI.callStatic(fn, [message, title, arr, objectId, actionType, data]);
 	}
 
+	@JNI("org.haxe.extension.facebook", "logEvent")
+	public static function logEvent(event : String) {}
+
 }

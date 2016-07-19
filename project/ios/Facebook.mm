@@ -1,6 +1,7 @@
 #import <CallbacksDelegate.h>
 #import <FacebookObserver.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKAppInviteContent.h>
 #import <FBSDKShareKit/FBSDKAppInviteDialog.h>
@@ -28,6 +29,21 @@ namespace extension_facebook {
 			name:@"UIApplicationDidFinishLaunchingNotification"
 			object:nil
 		];
+/*
+		[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidBecomeActiveNotification
+                                                     object:nil
+                                                      queue:[NSOperationQueue mainQueue]
+                                                 usingBlock:^(NSNotification * note) {
+                                                     [obs applicationDidBecomeActiveNotification];
+                                                 }];
+*/
+
+	 [[NSNotificationCenter defaultCenter]
+		 addObserver:obs
+		 selector:@selector(applicationDidBecomeActiveNotification)
+		 name:UIApplicationDidBecomeActiveNotification
+		 object:nil];
+
 	}
 
 	void init() {
@@ -35,10 +51,10 @@ namespace extension_facebook {
 		callbacks = [[CallbacksDelegate alloc] init];
 
 		[[OpenFlAppDelegate sharedInstance] addAppDelegate:callbacks];
-		
+
 		[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
 									didFinishLaunchingWithOptions:[[NSMutableDictionary alloc] init]];
-		
+
 		[obs observeTokenChange:nil];
 
 		[[NSNotificationCenter defaultCenter]
@@ -47,7 +63,6 @@ namespace extension_facebook {
 			name:FBSDKAccessTokenDidChangeNotification
 			object:nil
 		];
-
 	}
 
 	void logOut() {
@@ -173,6 +188,10 @@ namespace extension_facebook {
 		}
 		[FBSDKGameRequestDialog showWithContent:gameRequestContent delegate:callbacks];
 
+	}
+
+	void logEvent(std::string event) {
+		[FBSDKAppEvents logEvent:[NSString stringWithUTF8String:event.c_str()]];
 	}
 
 }

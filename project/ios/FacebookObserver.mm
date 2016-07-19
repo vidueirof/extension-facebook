@@ -1,6 +1,7 @@
 #import <Facebook.h>
 #import <FacebookObserver.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @implementation FacebookObserver
@@ -23,5 +24,13 @@
 								didFinishLaunchingWithOptions:launchOptions];
 
 }
+
+- (void) applicationDidBecomeActiveNotification {
+    // Call the 'activateApp' method to log an app event for use
+    // in analytics and advertising reporting.
+		NSLog(@"applicationDidBecomeActiveNotification");
+    [FBSDKAppEvents activateApp];
+}
+
 
 @end
