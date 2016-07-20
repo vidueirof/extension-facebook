@@ -458,13 +458,13 @@ public class FacebookExtension extends Extension {
 	}
 
 	// Add to each long-lived activity
-	@Override protected void onResume() {
+	@Override public void onResume() {
 	  super.onResume();
 	  AppEventsLogger.activateApp(mainActivity);
 	}
 
 	// you should also log app deactivation
-	@Override protected void onPause() {
+	@Override public void onPause() {
 	  super.onPause();
 	  AppEventsLogger.deactivateApp(mainActivity);
 	}
